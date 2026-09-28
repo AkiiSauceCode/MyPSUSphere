@@ -1,3 +1,45 @@
 from django.db import models
 
-# Create your models here.
+class BaseModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+class Collage(BaseModel):
+    collage_name = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.collage_name
+
+class Program(BaseModel):
+    program_name = models.CharField(max_length=150)
+    collage = models.ForeignKey(Collage, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.program_name
+
+class Organization(BaseModel):
+    organization_name = models.CharField(max_length=150)
+    collage = models.ForeignKey(Collage, on_delete=models.CASCADE)
+    description = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.organization_name
+
+class Student(BaseModel):
+    student_id = models.CharField(max_length=15)
+    lastname =  models.CharField(max_length=24)
+    firstname = models.CharField(max_length=24)
+    middlename = models.CharField(max_length=24, blank=True, null=True)
+    program = models.ForeignKey(Program, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.lastname}, {self.firstname}"
+
+class OrgMember(BaseModel):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    date_joined = models.DateField()
+
