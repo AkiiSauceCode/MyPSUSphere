@@ -6,14 +6,14 @@ from .models import College, Program, Organization, Student, OrgMember
 class CollegeAdmin(admin.ModelAdmin):
     list_display = ('college_name', 'created_at', 'updated_at')
     search_fields = ('college_name',)
-    list_filter = ('created_at')
+    list_filter = ('created_at',)
 
 
 @admin.register(Program)
 class ProgramAdmin(admin.ModelAdmin):
     list_display = ('program_name', 'college')
     search_fields = ('program_name', 'college__college_name')
-    list_filter = ('college')
+    list_filter = ('college',)
 
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
