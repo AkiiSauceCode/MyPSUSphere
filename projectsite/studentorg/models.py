@@ -7,22 +7,22 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
-class Collage(BaseModel):
-    collage_name = models.CharField(max_length=150)
+class College(BaseModel):
+    college_name = models.CharField(max_length=150)
 
     def __str__(self):
-        return self.collage_name
+        return self.college_name
 
 class Program(BaseModel):
     program_name = models.CharField(max_length=150)
-    collage = models.ForeignKey(Collage, on_delete=models.CASCADE)
+    college = models.ForeignKey(College, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.program_name
 
 class Organization(BaseModel):
     organization_name = models.CharField(max_length=150)
-    collage = models.ForeignKey(Collage, on_delete=models.CASCADE)
+    college = models.ForeignKey(College, on_delete=models.CASCADE)
     description = models.CharField(max_length=500)
 
     def __str__(self):
